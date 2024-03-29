@@ -9,6 +9,8 @@ const rotas = require('./rotas.js')
 // middleware json
 app.use(express.json())
 
+//app.use(express.urlencoded({extended: true}))
+
 // middleware cors (para que a aplicação possa ser acesada de fora)
 app.use(cors())
 
