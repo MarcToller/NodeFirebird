@@ -1,8 +1,8 @@
-{
+{  
   "name": "nodefirebird",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/MarcToller/NodeFirebird#readme",
   "dependencies": {
+    "core-js": "^3.36.1",
     "cors": "^2.8.5",
     "express": "^4.19.2"
   }
