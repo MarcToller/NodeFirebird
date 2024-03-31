@@ -3,6 +3,7 @@ const cors = require('cors');
 
 
 const app = express()
+const path = require('path');
 
 const rotas = require('./rotas.js')
 
@@ -15,6 +16,11 @@ app.use(express.json())
 app.use(cors())
 
 app.use(rotas)
+
+
+app.set('views', path.resolve(__dirname, 'src', 'frontend', 'views'));
+app.set('view engine', 'ejs');
+
 
 app.listen(3000, function(){
     console.log('aplicação rodando na porta 3000')

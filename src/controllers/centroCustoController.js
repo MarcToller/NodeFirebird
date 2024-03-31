@@ -37,7 +37,10 @@ exports.listar = async (req, res) => {
                     if (err) {                        
                         return res.status(500).json(err)
                     } else {
-                        return res.status(200).json(result)
+                        //console.log(result) 
+                        let listaCentroCusto = result;
+                        res.render('index', {listaCentroCusto}); // Envia para o index.ejs para listar lá   
+                        return res.status(200).json(result)                        
                     }
     
                 });                

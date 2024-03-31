@@ -1,0 +1,58 @@
+<%- include('includes/head.ejs') %>
+    <%- include('includes/nav.ejs') %>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2"></div>
+
+                <div class="col-lg-8 my-3">
+                    <h1 class="text-center">Contato</h1>
+                    <p class="text-center laad">Crie ou edite seu contato abaixo</p>
+
+                    <%- include('includes/messages')%>
+
+                    <!--Se não tem o id, dá o post (cadastra), senão envia para a página de edição -->
+                    <% if (!contato._id) { %>
+                        <form class="form-cadastro-contatos" action="/contato/register" method="POST">
+                    <% } else { %>
+                        <form class="form-cadastro-contatos" action="/contato/edit/<%= contato._id %>" method="POST">
+                    <% } %>        
+                        
+                        <input type="hidden" name="usuarioId" value="<%= contato.usuarioId %>">
+                        <input type="hidden" name="_csrf" value=<%=meuCsrfToken %>>
+                        <div class="form-group">
+                            <label>Nome</label>
+                            <!--este contato.nome é um objeto passado no render desta página -->
+                            <input value="<%= contato.nome %>" type="text" class="form-control" name="nome">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Sobrenome</label>
+                            <input value="<%= contato.sobrenome %>" type="text" class="form-control" name="sobrenome">
+                        </div>
+
+                        <div class="form-group">
+                            <label>E-mail</label>
+                            <input value="<%= contato.email %>" type="email" class="form-control" name="email">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Telefone</label>
+                            <input value="<%= contato.telefone %>" type="tel" class="form-control" name="telefone">
+                        </div>
+
+                        <% if (!contato._id) { %>
+                            <button type="submit" class="btn btn-primary my-3">Incluir</button>
+                        <% } else { %>
+                            <button type="submit" class="btn btn-primary my-3">Alterar</button>  
+                            <a class="btn btn-primary my-3" href="/contato">Cadastrar novo Contato</a>
+                            <a class="btn btn-primary my-3" href="/">Lista de Contatos</a>
+                        <% } %>        
+                        
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-2"></div>
+        </div>
+        </div>
+        <%- include('includes/footer.ejs') %>
