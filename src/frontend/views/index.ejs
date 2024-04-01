@@ -5,11 +5,11 @@
     <div class="col-lg-2"></div>
 
     <div class="col-lg-8 my-3">
-      <h1 class="text-center">Agenda</h1>      
+      <h1 class="text-center">Cadastro</h1>      
       
-      <% if (listaCentroCusto.length === 0) { %>                 
+      <% if (listaCentroCusto.length == 0) { %>                 
           <h4 class="text-center my-3">Nenhum Centro de Custo Cadastrado</h4>
-          <a class="btn btn-primary my-3" href="/contato">Cadastrar novo Centro de Custo</a>  
+          <a class="btn btn-primary my-3" href="/centrocusto">Cadastrar novo Centro de Custo</a>  
       <% } else { %>
       <p class="text-center laad">Centros de Custo</p>
       <div class="responsive-table">
@@ -18,8 +18,8 @@
           <tr>
             <td><%= cCusto.CODIGO_EXTERNO %></td>
             <td><%= cCusto.DESCRICAO %></td>            
-            <td><a href="contato/index/<%= cCusto.CODIGO %>">Editar</a></td>
-            <td><a class="text-danger" href="contato/delete/<%= cCusto.CODIGO %>">Excluir</a></td>
+            <td><a href="centrocusto/index/<%= cCusto.CODIGO %>">Editar</a></td>
+            <td><a class="text-danger" href="centrocusto/delete/<%= cCusto.CODIGO %>">Excluir</a></td>
           </tr>
           <% }) %>
         </table>

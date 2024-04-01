@@ -13,8 +13,13 @@ const Conexao = {
 
 }
 
+exports.index = (req, res) => {
+    console.log('passou no index')
+    res.render('centroCusto', {centroCusto: {CODIGO: 0, EMPRESA_ID: 0}})
+}
+
 exports.listar = async (req, res) => {
-    console.log(req.query)
+    console.log('passou no listar 1')    
     let vSql = 'SELECT FIRST 10 * FROM "G-CENTRO_CUSTO" WHERE 1 = 1 '
     let vParams = []
 
@@ -40,7 +45,7 @@ exports.listar = async (req, res) => {
                         //console.log(result) 
                         let listaCentroCusto = result;
                         res.render('index', {listaCentroCusto}); // Envia para o index.ejs para listar lá   
-                        return res.status(200).json(result)                        
+                        //return res.status(200).json(result)                        
                     }
     
                 });                
@@ -56,7 +61,7 @@ exports.listar = async (req, res) => {
 
 
 exports.cadastrar = async (req, res) => {
-    console.log(req.body)
+    console.log('passou no cadastrar')    
     let vParams = []
 
     vParams.push(req.body.descricao)
