@@ -15,7 +15,7 @@ const Conexao = {
 
 exports.index = (req, res) => {
     console.log('passou no index')
-    res.render('centroCusto', {centroCusto: {CODIGO: 0, EMPRESA_ID: 0}})
+    res.render('centroCusto', {centroCusto: {CODIGO: 0, EMPRESA_ID: 1263}})
 }
 
 exports.listar = async (req, res) => {
@@ -59,10 +59,51 @@ exports.listar = async (req, res) => {
 }
 
 
+exports.deletar = async (req, res) => {
+
+    console.log(req.params)
+
+    let vParams = []
+    if (!req.params.CODIGO) {
+        return res.render('404')        
+    } else {
+        vParams = [req.params.CODIGO]
+    }  
+    
+    try {        
+        // o  attach é como dar um connected = true na conexção Delphi
+            await firebird.attach(Conexao, function(err, db) {
+                    if (err) {                    
+                        return res.status(500).json(err)
+                    }                             
+                        // db é a conexo
+                    db.query('DELETE FROM "G-CENTRO_CUSTO" WHERE CODIGO = ?', vParams, 
+                        function(err, result) {                
+                            db.detach(); // desconecta o banco                        
+                        
+                            if (err) {                        
+                                //console.log(err)   
+                                return res.status(500).json(err)
+                            } else {
+                                return res.status(200).send('Registro excluído com sucesso')
+                            }
+        
+                         });                
+                  });        
+            
+        } catch (e) {
+            console.log(e);
+            //res.render('404.ejs')
+        }    
+
+
+}
 
 exports.cadastrar = async (req, res) => {
     console.log('passou no cadastrar')    
     let vParams = []
+
+    req.body.empresa_id = 1263;
 
     vParams.push(req.body.descricao)
     vParams.push(req.body.codigo_externo)

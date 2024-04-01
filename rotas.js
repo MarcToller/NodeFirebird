@@ -9,5 +9,6 @@ const centroCustoController = require('./src/controllers/centroCustoController.j
 route.get('/', centroCustoController.listar);
 route.get('/centrocusto', centroCustoController.index);
 route.post('/centrocusto', centroCustoController.cadastrar);
+route.get('/centrocusto/delete/:CODIGO', centroCustoController.deletar);
 
 module.exports = route;
