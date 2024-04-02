@@ -85,7 +85,8 @@ exports.deletar = async (req, res) => {
                                 //console.log(err)   
                                 return res.status(500).json(err)
                             } else {
-                                return res.status(200).send('Registro excluído com sucesso')
+                                req.flash('sucess', 'Contato excluído com sucesso.'); 
+                                res.redirect('/')
                             }
         
                          });                
