@@ -43,8 +43,13 @@ exports.listar = async (req, res) => {
                         return res.status(500).json(err)
                     } else {
                         //console.log(result) 
+                        
                         let listaCentroCusto = result;
-                        res.render('index', {listaCentroCusto}); // Envia para o index.ejs para listar lá   
+                        let errors = []
+                        let sucess = []
+                        let teste = {listaCentroCusto, errors, sucess}
+
+                        res.render('index', teste); // Envia para o index.ejs para listar lá   
                         //return res.status(200).json(result)                        
                     }
     
@@ -85,7 +90,7 @@ exports.deletar = async (req, res) => {
                                 //console.log(err)   
                                 return res.status(500).json(err)
                             } else {
-                                req.flash('sucess', 'Contato excluído com sucesso.'); 
+                                res.flash('sucess', 'Contato excluído com sucesso.'); 
                                 res.redirect('/')
                             }
         
