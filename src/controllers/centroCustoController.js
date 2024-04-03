@@ -1,4 +1,5 @@
 const firebird = require('node-firebird');
+const Query1 = require('../models/model.js');
 const { async } = require('regenerator-runtime');
 
 
@@ -17,6 +18,12 @@ const Conexao = {
 exports.index = (req, res) => {
     console.log('passou no index')
     res.render('centroCusto', {centroCusto: {CODIGO: 0, EMPRESA_ID: 1263}, errors: [], sucess: []})
+}
+
+exports.listar1 = async (req, res) => {
+    const Query = new Query1('SELECT FIRST 10 * FROM "G-CENTRO_CUSTO"', []);    
+    await Query.executaSql();
+    res.render('index', {listaCentroCusto: Query.listaRegistros});
 }
 
 exports.listar = async (req, res) => {
