@@ -1,4 +1,5 @@
 const firebird = require('node-firebird');
+const { async } = require('regenerator-runtime');
 
 
 const Conexao = {
@@ -15,12 +16,12 @@ const Conexao = {
 
 exports.index = (req, res) => {
     console.log('passou no index')
-    res.render('centroCusto', {centroCusto: {CODIGO: 0, EMPRESA_ID: 1263}})
+    res.render('centroCusto', {centroCusto: {CODIGO: 0, EMPRESA_ID: 1263}, errors: [], sucess: []})
 }
 
 exports.listar = async (req, res) => {
     console.log('passou no listar 1')    
-    let vSql = 'SELECT FIRST 10 * FROM "G-CENTRO_CUSTO" WHERE 1 = 1 '
+    let vSql = 'SELECT FIRST 10 * FROM "G-CENTRO_CUSTO" WHERE 1 = 1 '    
     let vParams = []
 
     if (req.query.codigo_externo) {
@@ -90,13 +91,13 @@ exports.deletar = async (req, res) => {
                                 //console.log(err)   
                                 return res.status(500).json(err)
                             } else {
-                                res.flash('sucess', 'Contato excluído com sucesso.'); 
-                                res.redirect('/')
+                                req.flash('sucess', ['Contato excluído com sucesso.']); 
+                                res.redirect('/');                                                   
                             }
         
-                         });                
+                        });                
                   });        
-            
+
         } catch (e) {
             console.log(e);
             //res.render('404.ejs')
@@ -133,12 +134,12 @@ exports.cadastrar = async (req, res) => {
                             //console.log(err)   
                             return res.status(500).json(err)
                         } else {
-                            return res.status(200).json({codigo: result.CODIGO})
+                            req.flash('sucess', 'Centro de Custo cadastrado com sucesso')
+                            res.redirect('/')                    
                         }
-    
                      });                
               });        
-        
+
     } catch (e) {
         console.log(e);
         //res.render('404.ejs')

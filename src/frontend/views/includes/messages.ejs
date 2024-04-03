@@ -11,13 +11,13 @@
     </div>
     <% } %>
 
-        <% if (sucess.length> 0) { %>
-            <!--esse errors esta no middleware é uma local global-->
-            <div class="row">
-                <div class="col my-3">
-                    <div class="alert alert-success">
-                        <%- sucess %>
-                    </div>
+    <% if (sucess.length> 0) { %>        
+        <!--esse errors esta no middleware é uma local global-->
+        <div class="row">
+            <div class="col my-3">
+                <div class="alert alert-success">
+                    <%- sucess %>
                 </div>
             </div>
-            <% } %>
+        </div>
+        <% } %>
