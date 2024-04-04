@@ -22,8 +22,9 @@ class Query {
         this.listaRegistros = [];
     }
 
-    executaSql(){
-        console.log(this.sql)    
+    executaSql(){ 
+        let vsql = this.sql;
+        let vparametros = this.parametros;       
         return new Promise((resolve, reject) => {
             firebird.attach(Conexao, function(err, db) {
                 if (err) {                    
@@ -34,7 +35,7 @@ class Query {
                 
                     // db é a conexo
                 
-                db.query('SELECT FIRST 10 * FROM "G-CENTRO_CUSTO"', [], function(err, result) {                
+                db.query(vsql, vparametros, function(err, result) {                
                     db.detach(); // desconecta o banco
                     
                     if (err) {                        
@@ -43,13 +44,13 @@ class Query {
                         return;
                     } else {
                         //console.log(result) 
-                        this.listaRegistros.push(result); 
-                        resolve()                                                
+                        //this.listaRegistros.push(result); 
+                        resolve(result)                                                
                     }    
                 });                
               })             
-        })        
-    }  
+        })                
+    }
 }  
 
 module.exports = Query;

@@ -21,9 +21,11 @@ exports.index = (req, res) => {
 }
 
 exports.listar1 = async (req, res) => {
-    const Query = new Query1('SELECT FIRST 10 * FROM "G-CENTRO_CUSTO"', []);    
-    await Query.executaSql();
-    res.render('index', {listaCentroCusto: Query.listaRegistros});
+    const Query = new Query1('SELECT * FROM "G-CENTRO_CUSTO"', []);             
+    lista = await Query.executaSql();    
+    
+    console.log('Quantidade de registros: '+lista.length)    
+    res.render('index', {listaCentroCusto: lista, errors: [], sucess: []});
 }
 
 exports.listar = async (req, res) => {
