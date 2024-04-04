@@ -1,5 +1,5 @@
 const firebird = require('node-firebird');
-const Query1 = require('../models/model.js');
+const Query = require('../models/model.js');
 const { async } = require('regenerator-runtime');
 
 
@@ -21,10 +21,11 @@ exports.index = (req, res) => {
 }
 
 exports.listar1 = async (req, res) => {
-    const Query = new Query1('SELECT * FROM "G-CENTRO_CUSTO"', []);             
-    lista = await Query.executaSql();    
+    const query = new Query('SELECT FIRST 10 * FROM "G-CENTRO_CUSTO"', []);             
+    lista = await query.executaSql();    
     
-    console.log('Quantidade de registros: '+lista.length)    
+    console.log('Quantidade de registros: '+lista.length)
+    //req.flash('sucess', 'teste')    ;
     res.render('index', {listaCentroCusto: lista, errors: [], sucess: []});
 }
 
@@ -74,6 +75,17 @@ exports.listar = async (req, res) => {
 }
 
 
+exports.deletar1 = async (req, res) => {
+    const dataInicio = new Date();
+    console.log('INÍCIO EXCLUSÃO', dataInicio.toLocaleTimeString('pt-BR', {}))      
+    const query = new Query('DELETE FROM "G-CENTRO_CUSTO"', []);             
+    await query.executaSql();      
+    const dataFinal = new Date();
+    console.log('FINAL EXCLUSÃO', dataFinal.toLocaleTimeString('pt-BR', {}))      
+    res.redirect('/');                                                   
+}
+
+
 exports.deletar = async (req, res) => {
 
     console.log(req.params)
@@ -92,7 +104,9 @@ exports.deletar = async (req, res) => {
                         return res.status(500).json(err)
                     }                             
                         // db é a conexo
-                    db.query('DELETE FROM "G-CENTRO_CUSTO" WHERE CODIGO = ?', vParams, 
+                    //db.query('DELETE FROM "G-CENTRO_CUSTO" WHERE CODIGO = ?', vParams, 
+                    db.query('DELETE FROM "G-CENTRO_CUSTO"', vParams, 
+
                         function(err, result) {                
                             db.detach(); // desconecta o banco                        
                         
@@ -106,7 +120,7 @@ exports.deletar = async (req, res) => {
         
                         });                
                   });        
-
+            console.log('terminou a exclusão')
         } catch (e) {
             console.log(e);
             //res.render('404.ejs')

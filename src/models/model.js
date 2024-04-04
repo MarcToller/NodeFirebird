@@ -54,3 +54,21 @@ class Query {
 }  
 
 module.exports = Query;
+
+
+// EXECUTE BLOCK
+// as
+//   DECLARE VARIABLE V_IND INTEGER;
+// BEGIN
+//   V_IND = 0;
+
+//   WHILE (:V_IND < 500000) DO
+//   BEGIN
+//     INSERT INTO "G-CENTRO_CUSTO"
+//       (CODIGO, CODIGO_EXTERNO, DESCRICAO, EMPRESA_ID)
+//     VALUES
+//       (GEN_ID(GEN_INTERNO_CADASTROS, 1), :V_IND, 'CENTRO DE CUSTO '||:V_IND, 1263);
+
+//     V_IND = :V_IND + 1;
+//   END
+// END
