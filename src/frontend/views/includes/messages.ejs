@@ -16,16 +16,22 @@
             </div>
         </div>
     </div>
-    <% } %>
+<% } %>
 
-    <% if (sucess.length> 0) { %>        
-        <% console.log('teste') %>
-        <!--esse errors esta no middleware é uma local global-->
-        <div class="row">
-            <div class="col my-3">
-                <div class="alert alert-success">
-                    <%- sucess %>
-                </div>
+<% if (sucess.length> 0) { %>        
+    <% console.log('teste') %>
+    <!--esse errors esta no middleware é uma local global-->
+    <div class="row">
+        <div class="col my-3">
+            <div class="alert alert-success">
+                <%   console.log('ANTES SUCESS') %>        
+                
+                <% errors.forEach(sucesso=> { %>
+                    <%- sucesso %> <br>
+                        <% }); %>
+                
+                <%   console.log('DEPOIS SUCESS') %>        
             </div>
         </div>
-        <% } %>
+    </div> 
+<% } %>
