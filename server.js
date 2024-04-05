@@ -8,6 +8,9 @@ const flash = require('connect-flash');
 
 const minhaSession = require('express-session');
 const rotas = require('./rotas.js')
+const csrtf = require('csurf'); // ver middleware na pasta middlewares
+
+const {meuMidlleware} = require(path.resolve(__dirname, 'src', 'midllewares', 'midlleware.js'))
 
 // middleware json
 app.use(express.json())
@@ -27,8 +30,12 @@ const sessionOptions = minhaSession({
 
 app.use(sessionOptions);
 
-
 app.use(flash())
+
+//app.use(csrtf)
+app.use(meuMidlleware)
+
+
 
 // middleware cors (para que a aplicação possa ser acesada de fora)
 app.use(cors())

@@ -75,20 +75,9 @@ exports.listar = async (req, res) => {
 }
 
 
-exports.deletar1 = async (req, res) => {
-    const dataInicio = new Date();
-    console.log('INÍCIO EXCLUSÃO', dataInicio.toLocaleTimeString('pt-BR', {}))      
-    const query = new Query('DELETE FROM "G-CENTRO_CUSTO"', []);             
-    await query.executaSql();      
-    const dataFinal = new Date();
-    console.log('FINAL EXCLUSÃO', dataFinal.toLocaleTimeString('pt-BR', {}))      
-    res.redirect('/');                                                   
-}
-
-
 exports.deletar = async (req, res) => {
+    const dataInicio = new Date();
 
-    console.log(req.params)
 
     let vParams = []
     if (!req.params.CODIGO) {
@@ -96,50 +85,36 @@ exports.deletar = async (req, res) => {
     } else {
         vParams = [req.params.CODIGO]
     }  
+
+    console.log('INÍCIO EXCLUSÃO', dataInicio.toLocaleTimeString('pt-BR', {})) 
+
+    const query = new Query('DELETE FROM "G-CENTRO_CUSTO" WHERE CODIGO = ?', vParams);             
+    await query.executaSql(); 
+
+    const dataFinal = new Date();
+    console.log('FINAL EXCLUSÃO', dataFinal.toLocaleTimeString('pt-BR', {}))      
     
-    try {        
-        // o  attach é como dar um connected = true na conexção Delphi
-            await firebird.attach(Conexao, function(err, db) {
-                    if (err) {                    
-                        return res.status(500).json(err)
-                    }                             
-                        // db é a conexo
-                    //db.query('DELETE FROM "G-CENTRO_CUSTO" WHERE CODIGO = ?', vParams, 
-                    db.query('DELETE FROM "G-CENTRO_CUSTO"', vParams, 
-
-                        function(err, result) {                
-                            db.detach(); // desconecta o banco                        
-                        
-                            if (err) {                        
-                                //console.log(err)   
-                                return res.status(500).json(err)
-                            } else {
-                                req.flash('sucess', ['Contato excluído com sucesso.']); 
-                                res.redirect('/');                                                   
-                            }
-        
-                        });                
-                  });        
-            console.log('terminou a exclusão')
-        } catch (e) {
-            console.log(e);
-            //res.render('404.ejs')
-        }    
-
-
+    req.flash('sucess', ['Registro excluído com sucesso']);    
+    //console.log('locals', res.locals)   
+    
+    res.redirect('/');                                                   
 }
+
 
 exports.cadastrar = async (req, res) => {
     console.log('passou no cadastrar')    
     let vParams = []
 
-    req.body.empresa_id = 1263;
-
-    vParams.push(req.body.descricao)
+    req.body.empresa_id = 1263;    
+    vParams.push(req.body.descricao)   
     vParams.push(req.body.codigo_externo)
     vParams.push(req.body.empresa_id)
 
-    console.log(vParams)
+    for (const key in req.body) {
+        console.log(key) 
+        console.log(req.body[key]) 
+        
+    }    
 
     try {        
     // o  attach é como dar um connected = true na conexção Delphi

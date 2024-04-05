@@ -1,4 +1,11 @@
+<% if (sucess.length > 0) { %>        
+<%   console.log('sucesso') %>        
+<% } else { %>            
+<%   console.log('nada de sucesso') %>        
+<% } %>                
+
 <% if (errors.length> 0) { %>
+    <% console.log('teste') %>
     <!--esse errors esta no middleware é uma local global-->
     <div class="row">
         <div class="col my-3">
@@ -12,6 +19,7 @@
     <% } %>
 
     <% if (sucess.length> 0) { %>        
+        <% console.log('teste') %>
         <!--esse errors esta no middleware é uma local global-->
         <div class="row">
             <div class="col my-3">
