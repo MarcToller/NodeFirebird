@@ -11,7 +11,7 @@
 
                     <!--Se não tem o id, dá o post (cadastra), senão envia para a página de edição -->
                     <% if (!centroCusto.CODIGO) { %>
-                        <form class="form-cadastro-contatos" action="/centroCusto" method="POST">
+                        <form class="form-cadastro-contatos" action="/centroCusto/cadastrar" method="POST">
                     <% } else { %>
                         <form class="form-cadastro-contatos" action="/centroCusto/edit/<%= centroCusto.CODIGO %>" method="POST">
                     <% } %>        

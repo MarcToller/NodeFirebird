@@ -17,19 +17,20 @@ class Query {
     constructor(sql, parametros) {        
         this.sql = sql;        
         this.parametros = parametros;
-        this.errors = [];
+        //this.errors = [];
         this.sucess = [];
         this.listaRegistros = [];
     }
 
     executaSql(){ 
         let vsql = this.sql;
-        let vparametros = this.parametros;       
+        let vparametros = this.parametros; 
+        let vErrors = []      
         return new Promise((resolve, reject) => {
             firebird.attach(Conexao, function(err, db) {
                 if (err) {                    
                     reject(err)
-                    this.errors.push(err)
+                    //this.errors.push(err)
                     return;
                 }         
                 
@@ -39,9 +40,7 @@ class Query {
                     db.detach(); // desconecta o banco
                     
                     if (err) {                        
-                        reject(err);
-                        this.errors.push(err)
-                        return;
+                        reject(err);                        
                     } else {
                         //console.log(result) 
                         //this.listaRegistros.push(result); 

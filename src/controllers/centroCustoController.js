@@ -16,29 +16,23 @@ const Conexao = {
 }
 
 exports.index = (req, res) => {
-    console.log('passou no index')
-    res.render('centroCusto', {centroCusto: {CODIGO: 0, EMPRESA_ID: 1263}, errors: [], sucess: []})
+
+    if (req.session.user) {
+        res.redirect('/listar');
+        return;
+    }
+    res.render('login');
 }
 
 exports.listar = async (req, res) => {
-    const query = new Query('SELECT FIRST 10 * FROM "G-CENTRO_CUSTO"', []);             
-    lista = await query.executaSql();    
-    
-    //console.log('Quantidade de registros: '+lista.length)
 
-
-    req.session.save(function() {
-        console.log('session save')
-        return res.render('index', {listaCentroCusto: lista, errors: [], sucess: []});
-    }) 
-    //req.flash('sucess', 'teste')    ;
-    
+    const query = new Query('SELECT FIRST 10 * FROM "G-CENTRO_CUSTO" ORDER BY CODIGO_EXTERNO', []);             
+    lista = await query.executaSql();        
+    res.render('index', {listaCentroCusto: lista, errors: [], sucess: []})
 }
 
 exports.deletar = async (req, res) => {
-    const dataInicio = new Date();
-
-
+    //const dataInicio = new Date();
     let vParams = []
     if (!req.params.CODIGO) {
         return res.render('404')        
@@ -46,18 +40,20 @@ exports.deletar = async (req, res) => {
         vParams = [req.params.CODIGO]
     }  
 
-    console.log('INÍCIO EXCLUSÃO', dataInicio.toLocaleTimeString('pt-BR', {})) 
+    //console.log('INÍCIO EXCLUSÃO', dataInicio.toLocaleTimeString('pt-BR', {})) 
 
     const query = new Query('DELETE FROM "G-CENTRO_CUSTO" WHERE CODIGO = ?', vParams);             
     await query.executaSql(); 
 
-    const dataFinal = new Date();
-    console.log('FINAL EXCLUSÃO', dataFinal.toLocaleTimeString('pt-BR', {}))      
+    //const dataFinal = new Date();
+    //console.log('FINAL EXCLUSÃO', dataFinal.toLocaleTimeString('pt-BR', {}))      
     
-    req.flash('sucess', ['Registro excluído com sucesso']);    
-    console.log('localssssssss', res.locals)   
-    
+    req.flash('sucess', ['Registro excluído com sucesso']);          
     res.redirect('/');                                                   
+}
+
+exports.novoCentroCusto = (req, res) => {
+    res.render('centroCusto', {centroCusto: {CODIGO: 0, EMPRESA_ID: 1263}, errors: [], sucess: []})    
 }
 
 
