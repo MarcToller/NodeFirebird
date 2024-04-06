@@ -1,0 +1,50 @@
+<%- include('includes/head.ejs') %>
+  <%- include('includes/nav.ejs') %>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-2"></div>
+
+        <div class="col-lg-8 my-3">
+          <h1 class="text-center">Criar conta ou entrar</h1>
+          <p class="text-center laad">Faça login ou crie sua conta abaixo</p>
+          <%- include('includes/messages') %>
+          <div class="row">
+            <div class="col-lg">
+              <h4>Faça seu cadastro</h4>
+              <p>Se você ainda não tem conta, preencha o formulário abaixo:</p>
+              <form class="form-cadastro-login" action="/login/register" method="POST"> <!-- aqui neste form vai a minha rota de cadastro! o Method padrão é GET então precisei colocar o POST-->
+                <input type="hidden" name="_csrf" value=<%= meuCsrfToken %>>
+                <div class="form-group">
+                  <label>Seu e-mail</label>
+                  <input type="email" class="form-control" name="email" >
+                </div>
+                <div class="form-group">
+                  <label>Sua Senha</label>
+                  <input type="password" class="form-control" name="password">
+                </div>
+                <button type="submit" class="btn btn-primary my-3">Criar minha conta</button>
+              </form>
+            </div>
+            <div class="col-lg">
+              <h4>Faça seu login</h4>
+              <p>Se você já tem uma conta, faça login abaixo:</p>
+              <form class="form-acesso-login" action="/login/login" method="POST"> <!-- aqui neste form vai a minha rota de cadastro! o Method padrão é GET então precisei colocar o POST-->
+                <input type="hidden" name="_csrf" value=<%= meuCsrfToken %>>
+                <div class="form-group">
+                  <label>Seu e-mail</label>
+                  <input type="email" class="form-control" name="email" >
+                </div>
+                <div class="form-group">
+                  <label>Sua Senha</label>
+                  <input type="password" class="form-control" name="password">
+                </div>
+                <button type="submit" class="btn btn-primary my-3">Acessar</button>
+              </form>              
+            </div>
+          </div>          
+        </div>
+
+        <div class="col-lg-2"></div>
+      </div>
+    </div>
+    <%- include('includes/footer.ejs') %>
