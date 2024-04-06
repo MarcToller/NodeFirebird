@@ -6,8 +6,8 @@ const centroCustoController = require('./src/controllers/centroCustoController.j
 const loginController = require('./src/controllers/loginController.js');
 
 
-route.get('/', centroCustoController.index);
-route.post('/login', loginController.index);
+route.get('/', loginController.index);
+route.post('/login', loginController.logar);
 route.get('/deslogar', loginController.deslogar);
 route.get('/listar', centroCustoController.listar);
 route.get('/centrocusto/novo', centroCustoController.novoCentroCusto);

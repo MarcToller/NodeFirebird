@@ -1,6 +1,17 @@
 const Query = require('../models/model.js');
 
-exports.index = async (req, res) => {
+
+exports.index = (req, res) => {
+
+    if (req.session.user) {
+        res.redirect('/listar');
+        return;
+    }
+    res.render('login');
+}
+
+
+exports.logar = async (req, res) => {
     
     vSenhaDigitada = req.body.senha
     vUsuarioDigitado = req.body.usuario

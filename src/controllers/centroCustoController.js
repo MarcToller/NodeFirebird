@@ -15,15 +15,6 @@ const Conexao = {
 
 }
 
-exports.index = (req, res) => {
-
-    if (req.session.user) {
-        res.redirect('/listar');
-        return;
-    }
-    res.render('login');
-}
-
 exports.listar = async (req, res) => {
 
     const query = new Query('SELECT FIRST 10 * FROM "G-CENTRO_CUSTO" ORDER BY CODIGO_EXTERNO', []);             
@@ -33,23 +24,28 @@ exports.listar = async (req, res) => {
 
 exports.deletar = async (req, res) => {
     //const dataInicio = new Date();
-    let vParams = []
-    if (!req.params.CODIGO) {
-        return res.render('404')        
-    } else {
-        vParams = [req.params.CODIGO]
-    }  
+    try{
+        let vParams = []
+        if (!req.params.CODIGO) {
+            return res.render('404')        
+        } else {
+            vParams = [req.params.CODIGO]
+        }  
 
-    //console.log('INÍCIO EXCLUSÃO', dataInicio.toLocaleTimeString('pt-BR', {})) 
+        //console.log('INÍCIO EXCLUSÃO', dataInicio.toLocaleTimeString('pt-BR', {})) 
 
-    const query = new Query('DELETE FROM "G-CENTRO_CUSTO" WHERE CODIGO = ?', vParams);             
-    await query.executaSql(); 
+        const query = new Query('DELETE FROM "G-CENTRO_CUSTO" WHERE CODIGO = ?', vParams);             
+        await query.executaSql(); 
 
-    //const dataFinal = new Date();
-    //console.log('FINAL EXCLUSÃO', dataFinal.toLocaleTimeString('pt-BR', {}))      
-    
-    req.flash('sucess', ['Registro excluído com sucesso']);          
-    res.redirect('/');                                                   
+        //const dataFinal = new Date();
+        //console.log('FINAL EXCLUSÃO', dataFinal.toLocaleTimeString('pt-BR', {}))      
+        
+        req.flash('sucess', 'Registro excluído com sucesso');          
+        res.redirect('/');                                                   
+    } catch(e) {
+        console.log(e);
+        res.render('404.ejs')
+    }    
 }
 
 exports.novoCentroCusto = (req, res) => {
