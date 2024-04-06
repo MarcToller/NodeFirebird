@@ -24,9 +24,15 @@ exports.listar = async (req, res) => {
     const query = new Query('SELECT FIRST 10 * FROM "G-CENTRO_CUSTO"', []);             
     lista = await query.executaSql();    
     
-    console.log('Quantidade de registros: '+lista.length)
+    //console.log('Quantidade de registros: '+lista.length)
+
+
+    req.session.save(function() {
+        console.log('session save')
+        return res.render('index', {listaCentroCusto: lista, errors: [], sucess: []});
+    }) 
     //req.flash('sucess', 'teste')    ;
-    res.render('index', {listaCentroCusto: lista, errors: [], sucess: []});
+    
 }
 
 exports.deletar = async (req, res) => {
