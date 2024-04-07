@@ -41,7 +41,8 @@ exports.deletar = async (req, res) => {
         //console.log('FINAL EXCLUSÃO', dataFinal.toLocaleTimeString('pt-BR', {}))      
         
         req.flash('sucess', 'Registro excluído com sucesso');          
-        res.redirect('/');                                                   
+    //req.session.sucess = ''
+        res.redirect('/');                                                           
     } catch(e) {
         console.log(e);
         res.render('404.ejs')

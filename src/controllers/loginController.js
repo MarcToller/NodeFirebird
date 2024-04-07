@@ -33,12 +33,13 @@ exports.logar = async (req, res) => {
         res.render('login');
         return
     } else {
-        req.session.user = req.body.usuario; 
-
-        req.session.save(function() {            
+        req.session.user = req.body.usuario         
+        
+        req.session.save(function() {        
+            //req.flash('sucess', 'usuário logado')             
             res.redirect('/');                        
         })
-        req.flash('sucess', 'usuário logado')         
+        
     }
 }
 
