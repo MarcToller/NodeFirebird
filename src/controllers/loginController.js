@@ -16,9 +16,9 @@ exports.logar = async (req, res) => {
     vSenhaDigitada = req.body.senha
     vUsuarioDigitado = req.body.usuario
 
-    if (!vSenhaDigitada || !vUsuarioDigitado) {
-        res.render('login');
-        req.flash('erros', 'zkjxlkcgjdlkxlf')
+    if (!vSenhaDigitada && !vUsuarioDigitado) {
+        req.flash('errors', 'Digite o usuário e a senha')
+        res.redirect('/');        
         return
     }
 
@@ -28,23 +28,30 @@ exports.logar = async (req, res) => {
     const query = new Query('SELECT SENHA FROM "G-USUARIOS" WHERE NOME = ?', vParametros);             
     vSenhaBase = await query.executaSql();
 
-    //if (!vSenhaBase || vSenhaBase != vSenhaDigitada)  {
-    if (!vSenhaBase)  {
-        res.render('login');
+    if (!vSenhaBase) {
+    //if (!vSenhaBase)  {
+        req.flash('errors', 'Usuário inexistente')
+        res.redirect('/');            
         return
+    } else if (!vSenhaDigitada){
+        req.flash('errors', 'Digite a senha')
+        res.redirect('/');        
+        return          
+//    } else if (vSenhaBase != vSenhaDigitada){
+//        req.flash('errors', 'Senha incorreta')
+//        res.redirect('/');        
+//        return    
     } else {
-        req.session.user = req.body.usuario         
-        
-        req.session.save(function() {        
-            //req.flash('sucess', 'usuário logado')             
-            res.redirect('/');                        
-        })
-        
+        req.flash('sucess', 'Usuário conectado')
+        req.session.user = req.body.usuario                 
+        req.session.save(function() {                    
+        res.redirect('/');                        
+        })        
     }
 }
 
-exports.deslogar = (req, res) => {
-    req.session.destroy();    
+exports.deslogar = (req, res) => {        
+    req.session.destroy();        
     res.redirect('/');
 
 }

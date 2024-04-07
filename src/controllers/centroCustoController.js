@@ -16,10 +16,10 @@ const Conexao = {
 }
 
 exports.listar = async (req, res) => {
-
+    
     const query = new Query('SELECT FIRST 10 * FROM "G-CENTRO_CUSTO" ORDER BY CODIGO_EXTERNO', []);             
     lista = await query.executaSql();        
-    res.render('index', {listaCentroCusto: lista, errors: [], sucess: []})
+    res.render('index', {listaCentroCusto: lista})
 }
 
 exports.deletar = async (req, res) => {
@@ -34,15 +34,18 @@ exports.deletar = async (req, res) => {
 
         //console.log('INÍCIO EXCLUSÃO', dataInicio.toLocaleTimeString('pt-BR', {})) 
 
-        const query = new Query('DELETE FROM "G-CENTRO_CUSTO" WHERE CODIGO = ?', vParams);             
-        await query.executaSql(); 
+        const queryConsulta = new Query('SELECT DESCRICAO FROM "G-CENTRO_CUSTO" WHERE CODIGO = ?', vParams);
+        resultado = await queryConsulta.executaSql()          
+
+        const queryInsersao = new Query('DELETE FROM "G-CENTRO_CUSTO" WHERE CODIGO = ?', vParams);             
+        await queryInsersao.executaSql(); 
 
         //const dataFinal = new Date();
         //console.log('FINAL EXCLUSÃO', dataFinal.toLocaleTimeString('pt-BR', {}))      
+        req.flash('sucess', `Centro de Custo ${resultado[0].DESCRICAO} excluído com sucesso`);          
         
-        req.flash('sucess', 'Registro excluído com sucesso');          
     //req.session.sucess = ''
-        res.redirect('/');                                                           
+        res.redirect('/listar');                                                           
     } catch(e) {
         console.log(e);
         res.render('404.ejs')
@@ -50,7 +53,7 @@ exports.deletar = async (req, res) => {
 }
 
 exports.novoCentroCusto = (req, res) => {
-    res.render('centroCusto', {centroCusto: {CODIGO: 0, EMPRESA_ID: 1263}, errors: [], sucess: []})    
+    res.render('centroCusto', {centroCusto: {CODIGO: 0, EMPRESA_ID: 1263}})    
 }
 
 
@@ -85,8 +88,9 @@ exports.cadastrar = async (req, res) => {
                             //console.log(err)   
                             return res.status(500).json(err)
                         } else {
-                            req.flash('sucess', 'Centro de Custo cadastrado com sucesso')
-                            res.redirect('/')                    
+                            console.log('PPPPPPPPPPPPPPPP', result)
+                            req.flash('sucess', `Centro de Custo ${req.body.descricao} cadastrado com sucesso`)
+                            res.redirect('/listar')                    
                         }
                      });                
               });        

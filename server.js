@@ -24,6 +24,8 @@ const sessionOptions = minhaSession({
 });
 
 app.use(sessionOptions);
+
+
 app.use(flash())
 app.use(meuMidlleware)
 app.use(cors())
