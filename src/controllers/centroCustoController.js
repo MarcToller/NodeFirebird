@@ -52,25 +52,57 @@ exports.deletar = async (req, res) => {
     }    
 }
 
-exports.novoCentroCusto = (req, res) => {
-    res.render('centroCusto', {centroCusto: {CODIGO: 0, EMPRESA_ID: 1263}})    
+exports.tela_cadastro = async (req, res) => {
+
+    vParams = []
+
+    //console.log('TTTTTTTTTTTTTTTTTT', req.params.CODIGO)
+
+    if (req.params.CODIGO == 0) {        
+        res.render('centroCusto', {centroCusto: {CODIGO: 0, EMPRESA_ID: 1263}})    
+    } else {
+        vParams.push(req.params.CODIGO) 
+        const queryConsulta = new Query('SELECT * FROM "G-CENTRO_CUSTO" WHERE CODIGO = ?', vParams);
+        resultado = await queryConsulta.executaSql()          
+        //console.log('HHHHHHHHHHHHHHHHHHHHHHHHH', resultado)
+        res.render('centroCusto', {centroCusto: resultado[0]})            
+    } 
 }
 
 
-exports.cadastrar = async (req, res) => {
-    console.log('passou no cadastrar')    
+exports.editar = async(req, res) => {
+    vParams = []
+    
+    vParams.push(req.body.DESCRICAO)   
+    vParams.push(req.body.CODIGO_EXTERNO)    
+    vParams.push(req.body.CODIGO)   
+
+    console.log(vParams);
+
+    vSql = 'UPDATE "G-CENTRO_CUSTO" SET DESCRICAO = ?, CODIGO_EXTERNO = ? WHERE CODIGO = ?'
+
+    const queryConsulta = new Query(vSql, vParams);
+    await queryConsulta.executaSql()          
+    req.flash('sucess', `Centro de Custo alterado com sucesso`)
+    res.redirect('/listar');                                                           
+
+} 
+
+exports.inserir = async (req, res) => {
+    //console.log('passou no cadastrar')    
+
     let vParams = []
 
-    req.body.empresa_id = 1263;    
-    vParams.push(req.body.descricao)   
-    vParams.push(req.body.codigo_externo)
-    vParams.push(req.body.empresa_id)
+    req.body.EMPRESA_ID = 1263;    
 
-    for (const key in req.body) {
-        console.log(key) 
-        console.log(req.body[key]) 
-        
-    }    
+    vParams.push(req.body.DESCRICAO)   
+    vParams.push(req.body.CODIGO_EXTERNO)
+    vParams.push(req.body.EMPRESA_ID)
+
+    //for (const key in req.body) {
+    //    console.log(key) 
+    //    console.log(req.body[key])         
+    //}    
 
     try {        
     // o  attach é como dar um connected = true na conexção Delphi
@@ -87,9 +119,8 @@ exports.cadastrar = async (req, res) => {
                         if (err) {                        
                             //console.log(err)   
                             return res.status(500).json(err)
-                        } else {
-                            console.log('PPPPPPPPPPPPPPPP', result)
-                            req.flash('sucess', `Centro de Custo ${req.body.descricao} cadastrado com sucesso`)
+                        } else {                            
+                            req.flash('sucess', `Centro de Custo ${req.body.DESCRICAO} cadastrado com sucesso`)
                             res.redirect('/listar')                    
                         }
                      });                
@@ -98,6 +129,5 @@ exports.cadastrar = async (req, res) => {
     } catch (e) {
         console.log(e);
         //res.render('404.ejs')
-    }
-    console.log('fim') // PARECE QUE O ASYNC AWAIT NÃO ESTA FUNCIONANDO AQUI..
+    }   
 }

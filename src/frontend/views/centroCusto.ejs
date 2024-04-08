@@ -11,21 +11,23 @@
 
                     <!--Se não tem o id, dá o post (cadastra), senão envia para a página de edição -->
                     <% if (!centroCusto.CODIGO) { %>
-                        <form class="form-cadastro-contatos" action="/centroCusto/cadastrar" method="POST">
-                    <% } else { %>
-                        <form class="form-cadastro-contatos" action="/centroCusto/edit/<%= centroCusto.CODIGO %>" method="POST">
+                        <form class="form-cadastro-contatos" action="/centroCusto/inserir" method="POST">
+                    <% } else { %>                        
+                        <form class="form-cadastro-contatos" action="/centroCusto/editar" method="POST">
                     <% } %>        
                         
-                        <input type="hidden" name="empresaId" value="<%= centroCusto.EMPRESA_ID %>">                        
+                        <input type="hidden" name="EMPRESA_ID" value="<%= centroCusto.EMPRESA_ID %>">                        
+                        <input type="hidden" name="CODIGO" value="<%= centroCusto.CODIGO %>">                        
+                        
                         <div class="form-group">
                             <label>Código</label>
                             <!--este contato.nome é um objeto passado no render desta página -->
-                            <input value="<%= centroCusto.CODIGO_EXTERNO %>" type="text" class="form-control" name="codigo_externo">
+                            <input value="<%= centroCusto.CODIGO_EXTERNO %>" type="number" class="form-control" name="CODIGO_EXTERNO">
                         </div>
 
                         <div class="form-group">
                             <label>Descrição</label>
-                            <input value="<%= centroCusto.DESCRICAO %>" type="text" class="form-control" name="descricao">
+                            <input value="<%= centroCusto.DESCRICAO %>" type="text" class="form-control" name="DESCRICAO">
                         </div>
                         
 
@@ -33,8 +35,8 @@
                             <button type="submit" class="btn btn-primary my-3">Incluir</button>
                         <% } else { %>
                             <button type="submit" class="btn btn-primary my-3">Alterar</button>  
-                            <a class="btn btn-primary my-3" href="/centrocusto">Cadastrar novo Contato</a>
-                            <a class="btn btn-primary my-3" href="/">Lista de Centros de Custo</a>
+                            <a class="btn btn-primary my-3" href="/centrocusto/tela_cadastro/0">Cadastrar novo Contato</a>
+                            <a class="btn btn-primary my-3" href="/listar">Lista de Centros de Custo</a>
                         <% } %>        
                         
                     </form>
