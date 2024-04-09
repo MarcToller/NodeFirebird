@@ -9,15 +9,13 @@ exports.meuMidlleware = (req, res, next) => {
 }
 
 exports.verificaUsuarioLogado = (req, res, next) => {    
-    // aqui verifico se a o usuário esta tentando acessar algo que não seja o login e não esteja logado
+    // aqui verifico se a o usuário esta tentando acessar algo que não seja o login e a Raiz e não esteja logado
     // esse middleware é global, entao se eu não verificar se é /login ele vcai num loop
 
-    //console.log('UUUUUUUUUUUUUUUUUUUUU', req.session.user, req.originalUrl, req.originalUrl.indexOf('/login'))
-
-    //if ((req.originalUrl != '/') && (!req.session.user)){        
-    //    res.redirect('/');
-    //    return;
-    //}
+    if ((req.originalUrl != '/') && (req.originalUrl != '/login') && (!req.session.user)){        
+        res.redirect('/');
+        return;
+    }
     next();
 }
 
