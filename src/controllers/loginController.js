@@ -28,6 +28,12 @@ exports.logar = async (req, res) => {
     const query = new Query('SELECT SENHA FROM "G-USUARIOS" WHERE NOME = ?', vParametros);             
     vSenhaBase = await query.executaSql();
 
+    if (query.errors.length > 0) {        
+        req.flash('errors', query.errors)  
+        res.redirect('/');            
+        return
+    } 
+
     if (!vSenhaBase) {
     //if (!vSenhaBase)  {
         req.flash('errors', 'Usuário inexistente')

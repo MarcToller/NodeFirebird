@@ -17,26 +17,26 @@ class Query {
     constructor(sql, parametros) {        
         this.sql = sql;        
         this.parametros = parametros;
-        //this.errors = [];
-        this.sucess = [];
-        this.listaRegistros = [];
+        this.errors = [];        
+        this.resultado = [];
     }
 
-    executaSql(){ 
-        let vsql = this.sql;
-        let vparametros = this.parametros; 
-        let vErrors = []      
+    executaSql(){         
+        
+       return this.executa(this.sql, this.parametros).catch(erros =>  {                  
+            this.errors.push('Ocorreu uma falha: '+ erros)
+        })    
+    } 
+
+    executa (Asql, AParametros) {
         return new Promise((resolve, reject) => {
             firebird.attach(Conexao, function(err, db) {
                 if (err) {                    
-                    reject(err)
-                    //this.errors.push(err)
+                    reject(err)                    
                     return;
-                }         
+                }   // db é a conexo
                 
-                    // db é a conexo
-                
-                db.query(vsql, vparametros, function(err, result) {                
+                db.query(Asql, AParametros, function(err, result) {                
                     db.detach(); // desconecta o banco
                     
                     if (err) {                        
@@ -47,8 +47,8 @@ class Query {
                         resolve(result)                                                
                     }    
                 });                
-              })             
-        })                
+            })             
+        })  
     }
 }  
 
