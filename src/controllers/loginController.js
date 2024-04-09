@@ -56,8 +56,9 @@ exports.logar = async (req, res) => {
     }
 }
 
-exports.deslogar = (req, res) => {        
-    req.session.destroy();        
+exports.deslogar = (req, res) => {
+    req.session.user = null         
+    req.session.destroy();            
     res.redirect('/');
 
 }

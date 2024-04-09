@@ -5,7 +5,7 @@ const path = require('path');
 const flash = require('connect-flash');
 const minhaSession = require('express-session');
 const rotas = require('./rotas.js')
-const {meuMidlleware} = require(path.resolve(__dirname, 'src', 'midllewares', 'midlleware.js'))
+const {meuMidlleware, verificaUsuarioLogado} = require(path.resolve(__dirname, 'src', 'midllewares', 'midlleware.js'))
 
 
 app.use(express.json())
@@ -28,6 +28,7 @@ app.use(sessionOptions);
 
 app.use(flash())
 app.use(meuMidlleware)
+app.use(verificaUsuarioLogado)
 app.use(cors())
 app.use(rotas)
 app.set('views', path.resolve(__dirname, 'src', 'frontend', 'views'));
