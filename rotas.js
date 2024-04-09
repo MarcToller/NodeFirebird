@@ -15,6 +15,6 @@ route.get('/listar', centroCustoController.listar);
 route.get('/centrocusto/tela_cadastro/:CODIGO', centroCustoController.tela_cadastro);
 route.post('/centrocusto/inserir', centroCustoController.inserir);
 route.post('/centrocusto/editar', centroCustoController.editar);
-route.get('/centrocusto/delete/:CODIGO', centroCustoController.deletar);
+route.get('/centrocusto/delete/:CODIGO/:DESCRICAO', centroCustoController.deletar);
 
 module.exports = route;

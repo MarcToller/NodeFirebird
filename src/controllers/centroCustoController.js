@@ -31,18 +31,13 @@ exports.deletar = async (req, res) => {
         } else {
             vParams = [req.params.CODIGO]
         }  
-
-        //console.log('INÍCIO EXCLUSÃO', dataInicio.toLocaleTimeString('pt-BR', {})) 
-
-        const queryConsulta = new Query('SELECT DESCRICAO FROM "G-CENTRO_CUSTO" WHERE CODIGO = ?', vParams);
-        resultado = await queryConsulta.executaSql()          
-
+        //console.log('INÍCIO EXCLUSÃO', dataInicio.toLocaleTimeString('pt-BR', {}))         
         const queryInsersao = new Query('DELETE FROM "G-CENTRO_CUSTO" WHERE CODIGO = ?', vParams);             
         await queryInsersao.executaSql(); 
 
         //const dataFinal = new Date();
         //console.log('FINAL EXCLUSÃO', dataFinal.toLocaleTimeString('pt-BR', {}))      
-        req.flash('sucess', `Centro de Custo ${resultado[0].DESCRICAO} excluído com sucesso`);          
+        req.flash('sucess', `Centro de Custo ${req.params.DESCRICAO} excluído com sucesso`);          
         
     //req.session.sucess = ''
         res.redirect('/listar');                                                           

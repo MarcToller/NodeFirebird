@@ -20,7 +20,7 @@
             <td><%= cCusto.CODIGO_EXTERNO %></td>
             <td><%= cCusto.DESCRICAO %></td>            
             <td><a href="/centrocusto/tela_cadastro/<%= cCusto.CODIGO %>">Editar</a></td>
-            <td><a class="text-danger" href="centrocusto/delete/<%= cCusto.CODIGO %>">Excluir</a></td>
+            <td><a class="text-danger" href="centrocusto/delete/<%= cCusto.CODIGO %>/<%= cCusto.DESCRICAO %>">Excluir</a></td>
           </tr>
           <% }) %>
         </table>
