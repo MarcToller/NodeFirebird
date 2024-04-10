@@ -34,7 +34,7 @@ exports.logar = async (req, res) => {
         return
     } 
 
-    if (!vSenhaBase) {
+    if (vSenhaBase.length == 0) {
     //if (!vSenhaBase)  {
         req.flash('errors', 'Usuário inexistente')
         res.redirect('/');            
