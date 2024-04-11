@@ -1,12 +1,15 @@
 const express = require('express');
 const route = express.Router();
+const path = require('path');
 
 
 const centroCustoController = require('./src/controllers/centroCustoController.js');
 const loginController = require('./src/controllers/loginController.js');
 
+const {carregaEmpresas} = require(path.resolve(__dirname, 'src', 'midllewares', 'midlleware.js'))
 
-route.get('/', loginController.index);
+
+route.get('/', carregaEmpresas, loginController.index);
 route.post('/login', loginController.logar);
 route.get('/deslogar', loginController.deslogar);
 

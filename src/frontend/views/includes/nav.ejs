@@ -6,7 +6,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto">                
                 
                 <% if (user) { %>
                     <li class="nav-item">
@@ -23,9 +23,11 @@
                               Selecione uma empresa
                             </button>
                             <div class="dropdown-menu">
-                              <a class="dropdown-item" href="#">Link 1</a>
-                              <a class="dropdown-item" href="#">Link 2</a>
-                              <a class="dropdown-item" href="#">Link 3</a>
+
+                            <!-- <% listaEmpresas.forEach(empresa => { %>
+                                <a class="dropdown-item" href="#"><%= empresa.codigo+' - '+empresa.nome %></a>
+                            <% }) %> -->                         
+
                             </div>
                           </div>                        
                     </li>
