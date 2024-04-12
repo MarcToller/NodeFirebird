@@ -14,7 +14,7 @@ route.get('/', loginController.index);
 route.post('/login', carregaEmpresas, loginController.logar);
 route.get('/deslogar', loginController.deslogar);
 
-route.get('/empresa_corrente/:CODIGO', empresaController.definirEmpresaCorrente)
+route.get('/empresa_corrente/:CODIGO/:NOME', empresaController.definirEmpresaCorrente)
 
 
 route.get('/listar', centroCustoController.listar);

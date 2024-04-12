@@ -6,12 +6,8 @@ exports.meuMidlleware = (req, res, next) => {
     res.locals.sucess = req.flash('sucess');
     res.locals.user = req.session.user // para por exemplo, mostrar o nome do usuário na página principal emquanto ele navega      
     res.locals.listaEmpresas = req.session.listaEmpresas
-
-    console.log('qqqqqqqqqqqqqqqqqqqq', req.session.empresaCorrente)
-
     res.locals.empresaCorrente = req.session.empresaCorrente
-
-    console.log('ppppppppppppppppppppppppp', res.locals.empresaCorrente)
+    res.locals.descricaoEmpresaCorrente = req.session.descricaoEmpresaCorrente
     
     //res.locals.user = req.session.user; // para por exemplo, mostrar o nome do usuário na página principal emquanto ele navega
     

@@ -17,8 +17,8 @@
                     <li class="nav-item">
                         <div class="dropdown">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                            <% if (empresaCorrente) { %>    
-                                empresaCorrente
+                            <% if (descricaoEmpresaCorrente) { %>    
+                                <%= descricaoEmpresaCorrente %>
                             <%} else { %>                                         
                               Selecione uma empresa
                               <% } %>         
@@ -26,8 +26,7 @@
                             <div class="dropdown-menu">
 
                             <% listaEmpresas.forEach(empresa => { %>
-                                <a class="dropdown-item" href="/empresa_corrente/<%= empresa.CODIGO %>"><%= empresa.CODIGO+' - '+empresa.NOME %></a>
-                                
+                                <a class="dropdown-item" href="/empresa_corrente/<%= empresa.CODIGO %>/<%= empresa.NOME %>"><%= empresa.CODIGO+' - '+empresa.NOME %></a>                               
                                 
                             <% }) %>                     
 
