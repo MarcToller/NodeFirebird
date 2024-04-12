@@ -5,6 +5,7 @@ const path = require('path');
 
 const centroCustoController = require('./src/controllers/centroCustoController.js');
 const loginController = require('./src/controllers/loginController.js');
+const empresaController = require('./src/controllers/empresaController.js');
 
 const {carregaEmpresas} = require(path.resolve(__dirname, 'src', 'midllewares', 'midlleware.js'))
 
@@ -12,6 +13,8 @@ const {carregaEmpresas} = require(path.resolve(__dirname, 'src', 'midllewares', 
 route.get('/', loginController.index);
 route.post('/login', carregaEmpresas, loginController.logar);
 route.get('/deslogar', loginController.deslogar);
+
+route.get('/empresa_corrente/:CODIGO', empresaController.definirEmpresaCorrente)
 
 
 route.get('/listar', centroCustoController.listar);

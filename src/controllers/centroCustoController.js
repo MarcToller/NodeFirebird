@@ -17,7 +17,7 @@ const Conexao = {
 
 exports.listar = async (req, res) => {
     
-    const query = new Query('SELECT FIRST 10 * FROM "G-CENTRO_CUSTO" ORDER BY CODIGO_EXTERNO', []);             
+    const query = new Query('SELECT FIRST 10 * FROM "G-CENTRO_CUSTO" WHERE EMPRESA_ID = ? ORDER BY CODIGO_EXTERNO', [req.session.empresaCorrente]);             
     lista = await query.executaSql(); 
     
     if (query.errors.length > 0) {        
@@ -101,11 +101,12 @@ exports.inserir = async (req, res) => {
 
     let vParams = []
 
-    req.body.EMPRESA_ID = 1263;    
+    //req.body.EMPRESA_ID = 1263;    
 
     vParams.push(req.body.DESCRICAO)   
     vParams.push(req.body.CODIGO_EXTERNO)
-    vParams.push(req.body.EMPRESA_ID)
+    //vParams.push(req.body.EMPRESA_ID)
+    vParams.push(req.session.empresaCorrente)
 
     vSql = 'INSERT INTO "G-CENTRO_CUSTO"(CODIGO, DESCRICAO, CODIGO_EXTERNO, EMPRESA_ID) VALUES (GEN_ID(GEN_INTERNO_CADASTROS, 1), ?, ?, ?)';
 

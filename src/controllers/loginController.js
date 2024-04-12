@@ -50,6 +50,7 @@ exports.logar = async (req, res) => {
     } else {
         req.flash('sucess', 'Usuário conectado')
         req.session.user = req.body.usuario          
+        req.session.empresaCorrente = 0
         req.session.save(function() {                    
         res.redirect('/');                        
         })        

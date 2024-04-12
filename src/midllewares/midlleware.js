@@ -6,6 +6,12 @@ exports.meuMidlleware = (req, res, next) => {
     res.locals.sucess = req.flash('sucess');
     res.locals.user = req.session.user // para por exemplo, mostrar o nome do usuário na página principal emquanto ele navega      
     res.locals.listaEmpresas = req.session.listaEmpresas
+
+    console.log('qqqqqqqqqqqqqqqqqqqq', req.session.empresaCorrente)
+
+    res.locals.empresaCorrente = req.session.empresaCorrente
+
+    console.log('ppppppppppppppppppppppppp', res.locals.empresaCorrente)
     
     //res.locals.user = req.session.user; // para por exemplo, mostrar o nome do usuário na página principal emquanto ele navega
     
@@ -25,7 +31,7 @@ exports.verificaUsuarioLogado = (req, res, next) => {
 
 exports.carregaEmpresas = async (req, res, next) => {    
 
-    const queryConsulta = new Query('SELECT CODIGO_EXTERNO, NOME FROM "G-EMPRESAS"', []);
+    const queryConsulta = new Query('SELECT CODIGO, CODIGO_EXTERNO, NOME FROM "G-EMPRESAS"', []);
     resultado = await queryConsulta.executaSql()      
     //console.log('yyyyyyyyyyyyyyyyyyyyy', resultado)
 
