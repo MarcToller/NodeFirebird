@@ -55,9 +55,7 @@ exports.deletar = async (req, res) => {
 exports.tela_cadastro = async (req, res) => {
 
     vParams = []
-
-    //console.log('TTTTTTTTTTTTTTTTTT', req.params.CODIGO)
-
+    
     if (req.params.CODIGO == 0) {        
         res.render('centroCusto', {centroCusto: {CODIGO: 0, EMPRESA_ID: 1263}})    
     } else {
@@ -69,8 +67,7 @@ exports.tela_cadastro = async (req, res) => {
             req.flash('errors', queryConsulta.errors)          
         } else {
             res.render('centroCusto', {centroCusto: resultado[0]})            
-        }    
-        //console.log('HHHHHHHHHHHHHHHHHHHHHHHHH', resultado)
+        }            
         
     } 
 }

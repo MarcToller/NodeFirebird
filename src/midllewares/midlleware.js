@@ -1,8 +1,11 @@
+const Query = require('../models/model.js');
+
 exports.meuMidlleware = (req, res, next) => {        
     
     res.locals.errors = req.flash('errors') 
     res.locals.sucess = req.flash('sucess');
-    res.locals.user = req.session.user // para por exemplo, mostrar o nome do usuário na página principal emquanto ele navega       
+    res.locals.user = req.session.user // para por exemplo, mostrar o nome do usuário na página principal emquanto ele navega      
+    res.locals.listaEmpresas = req.session.listaEmpresas
     
     //res.locals.user = req.session.user; // para por exemplo, mostrar o nome do usuário na página principal emquanto ele navega
     
@@ -20,15 +23,14 @@ exports.verificaUsuarioLogado = (req, res, next) => {
     next();
 }
 
-exports.carregaEmpresas = (req, res, next) => {
-    console.log('ççççççççççççççççççççççççççççççççççççç')
-    let listaEmpresas = []
+exports.carregaEmpresas = async (req, res, next) => {    
 
-    listaEmpresas.push({codigo:'1', nome: "empresa 1"})
+    const queryConsulta = new Query('SELECT CODIGO_EXTERNO, NOME FROM "G-EMPRESAS"', []);
+    resultado = await queryConsulta.executaSql()      
+    //console.log('yyyyyyyyyyyyyyyyyyyyy', resultado)
 
-    res.locals.listaEmpresas = listaEmpresas//  {listaEmpresas: [{codigo:'1', nome: "empresa 1"}, {codigo:'2', nome: "empresa 2"}]}
-    console.log(res.locals.listaEmpresas)
-
+    req.session.listaEmpresas = resultado
+    
     next()    
 }
 

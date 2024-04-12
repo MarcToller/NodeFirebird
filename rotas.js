@@ -9,8 +9,8 @@ const loginController = require('./src/controllers/loginController.js');
 const {carregaEmpresas} = require(path.resolve(__dirname, 'src', 'midllewares', 'midlleware.js'))
 
 
-route.get('/', carregaEmpresas, loginController.index);
-route.post('/login', loginController.logar);
+route.get('/', loginController.index);
+route.post('/login', carregaEmpresas, loginController.logar);
 route.get('/deslogar', loginController.deslogar);
 
 
